@@ -1,38 +1,47 @@
-.App {
-  text-align: center;
+/* creating my color variables */
+:root {
+  --white: #F7F7F7;
+  --black: #020E26;
+
+  --night: #507526;
+  --night-dark: #507526;
+
+  --sunrise: #F87676;
+  --sunrise-dark: #A44539;
+
+  --midday: #7AC0FA;
+  --midday-dark: #376BBA;
+
+  --overcast: #BDCCD9;
+  --overcast-dark: #557185;
+
+  --sunset: #FBAA5F;
+  --sunset-dark: #8A500C;
+
+  /* form error colors */
+  --error-red: #b8001f;
+  --error-pink: #ffccd5;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+
+html, body {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  background-color: var(--white);
+  font-family: 'Roboto', sans-serif;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+* {
+  box-sizing: border-box;
+  transition: 0.25s;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+*,
+*:after,
+*:before {
+	box-sizing: border-box;
 }
