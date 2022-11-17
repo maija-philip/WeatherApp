@@ -260,7 +260,7 @@ class Weather extends React.Component {
     }
 
     render() {
-        console.log("Render Started")
+        console.log("Render Started", this.state.currentTimeSection)
         const { error, isLoadedWeather, isLoadedLocation } = this.state;
         if (error) {
             // ERROR HAS OCCURED
@@ -285,7 +285,7 @@ class Weather extends React.Component {
                         sunrise={this.state.sunrise}
                         sunset={this.state.sunset}
                         city={this.state.city}
-                        timeSection={this.state.time}
+                        timeSection={this.state.currentTimeSection}
                         />
 
                     <SideInfo 

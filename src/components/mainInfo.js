@@ -26,7 +26,7 @@ class MainInfo extends React.Component {
                         min temp: {this.props.minTemp} <br/>
                         max temp: {this.props.maxTemp} <br/>
                         city: {this.props.city} <br/>
-                        timeSection: {this.props.time}
+                        timeSection: {this.props.timeSection}
                     </p>
             </div>
         )

@@ -25,7 +25,7 @@ class SideInfo extends React.Component {
                         sunrise: {this.props.sunrise} <br/>
                         sunset: {this.props.sunset} <br/>
                         cloudiness: {this.props.cloudiness} <br/>
-                        timeSection: {this.props.time}
+                        timeSection: {this.props.timeSection}
                     </p>
             </div>
         )
