@@ -40,16 +40,27 @@ REMINDERS:
 /* creating my color variables */
 :root {
   --white: #F7F7F7;
-  --grey: #EDEDED;
   --black: #020E26;
-  --theme: #507526;
-  --theme-light: #7BB03E;
+
+  --night: #5355AC;
+  --night-dark: #5355AC;
+
+  --sunrise: #F87676;
+  --sunrise-dark: #A44539;
+
+  --clear: #7AC0FA;
+  --clear-dark: #376BBA;
+
+  --overcast: #BDCCD9;
+  --overcast-dark: #557185;
+
+  --sunset: #FBAA5F;
+  --sunset-dark: #8A500C;
 
   /* form error colors */
   --error-red: #b8001f;
   --error-pink: #ffccd5;
 }
-
 
 html, body {
   width: 100%;
@@ -136,8 +147,7 @@ h2 {
 /* main styles */
 
 main {
-  margin-top: 80px;
-  min-height: 80vh;
+  min-height: 100vh;
 }
 
 

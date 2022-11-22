@@ -4,6 +4,7 @@
  */
 
 // import logo from './logo.svg';
+import './theme.css';
 import './App.css';
 import Weather from './components/get-weather.js';
 

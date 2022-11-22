@@ -15,19 +15,30 @@ class SideInfo extends React.Component {
     }
 
     render() {
+        let deg = String.fromCharCode(176);
+        let copy = String.fromCharCode(169);
+
         return (
-            <div><b>Side Info</b>
-                <p> 
-                        humidity: {this.props.humidity} <br/>
-                        visibility: {this.props.visibility} <br/>
-                        wind speed: {this.props.windSpeed} <br/>
-                        wind direction: {this.props.windDirection} <br/>
-                        sunrise: {this.props.sunrise} <br/>
-                        sunset: {this.props.sunset} <br/>
-                        cloudiness: {this.props.cloudiness} <br/>
-                        timeSection: {this.props.timeSection}
+            <section className='side-info-section'>
+                <div>
+                    <p>humidity: {this.props.humidity}</p>
+                    <p> 
+                        Visibility {this.props.visibility} meters<br/>
+                        Wind Speed {this.props.windSpeed} meters/sec
                     </p>
-            </div>
+                    <p>wind direction: {this.props.windDirection}</p>
+                    <p>
+                        Sunrise {this.props.sunrise} <br/>
+                        Sunset {this.props.sunset}
+                    </p>
+                    <p>
+                        cloudiness: {this.props.cloudiness}
+                    </p>
+
+                    <div className='footer-logo'></div>
+                    <p>Made by Maija Philip {copy} 2022</p>
+                </div>
+            </section>
         )
     }
 }

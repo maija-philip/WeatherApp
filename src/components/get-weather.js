@@ -27,9 +27,7 @@ class Weather extends React.Component {
             windSpeed: 0,
             windDirection: 0,
             sunrise: 0,
-            sunriseMili: 0,
             sunset: 0,
-            sunsetMili: 0,
             cloudiness: 0,
             timezone: 0,
             city: "",
@@ -159,17 +157,13 @@ class Weather extends React.Component {
             windSpeed: result.wind.speed,
             windDirection: result.wind.deg,
             sunrise: sunriseTime,
-            sunriseMili: sunriseMili,
             sunset: sunsetTime,
-            sunsetMili: sunsetMili,
             cloudiness: result.clouds.all,
             timezone: timezoneUTCshift,
             isLoadedWeather: true
         });
 
-        console.log(this.state.sunriseMili, this.state.sunsetMili);
-
-        this.getTime();
+        this.getTime(sunriseMili, sunsetMili);
     }
 
     processLocationData = (result) => {
@@ -184,19 +178,19 @@ class Weather extends React.Component {
     }
     
      // get the time and put it into a timeSection
-     getTime = () => {
+     getTime = (sunriseMili, sunsetMili) => {
         console.log("Start GetTime");
 
         let currentDate = new Date();
         let hour = currentDate.getHours();
         let minutes = currentDate.getMinutes();
 
-        let sunriseDate = new Date (this.state.sunrise * 1000);  
+        let sunriseDate = new Date (sunriseMili * 1000);  
         let sunriseHour = sunriseDate.getHours();
         let sunriseMin = sunriseDate.getMinutes();
         console.log("sunrise set", sunriseHour, sunriseMin);
 
-        let sunsetDate = new Date (this.state.sunsetMili * 1000);  
+        let sunsetDate = new Date (sunsetMili * 1000);  
         let sunsetHour = sunsetDate.getHours();
         let sunsetMin = sunsetDate.getMinutes();
         console.log("sunset set", sunsetHour, sunsetMin);
@@ -274,7 +268,7 @@ class Weather extends React.Component {
             // GENERAL RETURN
 
             return(
-                <div>
+                <div className='get-weather-div'>
 
                     <MainInfo 
                         temp={this.state.temp} 
