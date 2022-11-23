@@ -8,8 +8,14 @@ import React from 'react';
 import MainInfo from './mainInfo.js';
 import SideInfo from './sideInfo.js';
 
+// I would add a comment about why you have this odd variable here.  I remember why it is here,
+// but if you came back in 6 months you might be quite puzzled.
+// "Quick hack so that React doesn't double-call my service in dev mode."  etc.
 let showPosCount = 0;
 
+// I usually keep the name of the Component the same as the filname.  You only have a couple 
+// files so it is easy to keep track of, but once you have more files it'll get really
+// annoying, especially if sharing with others.
 class Weather extends React.Component {
 
     constructor(props) {
@@ -51,8 +57,10 @@ class Weather extends React.Component {
             // create callback for when the location is received
             navigator.geolocation.getCurrentPosition(this.showPosition);
         }
-        
-       
+        // else ... what happens?  can permission to this be denied in the browser?
+        // in your render() method you have a section for error (which, by the way isn't
+        // defaulted to a value in your constructur ...), maybe there's an error for
+        // "you didn't give us permission"?
     }
 
 
@@ -60,12 +68,32 @@ class Weather extends React.Component {
     showPosition = (position) => {
         showPosCount++;
         if (showPosCount > 1) {
+            // React calls all methods twice in development mode, and I don't want to use up
+            // my daily service call limit, so this is a quick hack to cut the calls in half.
             return;
         }
+        // const lat ...
+        // const long ...
         let lat = position.coords.latitude;
         let long = position.coords.longitude;
+
+        // You have a lot of console.log() comments scattered throughout your app.  I put 
+        // those in to debug an issue, and then when I figure it out, I remove them.  If 
+        // you don't, you end up with this very noisy and messy console that makes it
+        // difficult to focus on what you are working on.  So as soon as I verify that 
+        // I have it working the way I want, I remove console.log() lines and re-run
+        // it until I get a clean console.  
+        // If I think I'm likely going to need to add that console.log() back in, I'll 
+        // just comment it and leave it in the code, but they are pretty easy to add in,
+        // so I often just delete them when I'm done with them.
         console.log("showPosition()", showPosCount, lat, long); 
 
+        // Calling setState() will made React start another render.  So you should only
+        // do this if you have information that you want to update in your display ...
+        // These two state variables aren't actually accessed anywhere else in your Component,
+        // so why bother putting them into the state at all?
+        // So I think you just delete this code, and also remove their initialization 
+        // in the contructor as part of the state.
         this.setState({
             lat: lat,
             long: long
@@ -112,6 +140,11 @@ class Weather extends React.Component {
         //process the data and then set state
         let timezoneUTCshift = result.timezone;
 
+        // const ...
+        // const ...
+        // use const!  :)
+        // Your default should be 'const' at all times.  Only use 'let' if necessary.
+
         // make the sunrise/sunset times 12hr and to the time zone
         // multiply by 1000 to turn from seconds to miliseconds
         let sunriseMili = result.sys.sunrise;
@@ -122,7 +155,7 @@ class Weather extends React.Component {
         console.log(sunriseDate, sunsetDate);
         console.log(sunriseMili, sunsetMili);
 
-
+/*
         // format the dates to be for example 6:54am and 4:54pm
         let sunriseMinutes = sunriseDate.getMinutes(); 
         let sunriseTime = sunriseDate.getHours() + ':';
@@ -144,6 +177,15 @@ class Weather extends React.Component {
         } else {
             sunsetTime += ':' + sunsetMinutes + 'pm';
         }
+*/
+        // I was like "wow, there's a lot of code here", and then I realized that you were basically
+        // doing the same thing twice.  So I condensed it.  I haven't tried running it, but I'm
+        // pretty sure it does exactly the same thing.  Try it out.
+        const convertToMyTimeFormat = (hours, minutes, suffix) => {
+            return `${hours}:${minutes < 10 ? 0 : ''}${minutes}${suffix}`;
+        }
+        const sunriseTime = convertToMyTimeFormat(sunriseDate.getHours(), sunriseDate.getMinutes(), 'am'); 
+        const sunsetTime = convertToMyTimeFormat(sunsetDate.getHours() - 12, sunsetDate.getMinutes(), 'pm');
 
         // TODO round the numbers!!
         this.setState({
@@ -160,12 +202,27 @@ class Weather extends React.Component {
             sunset: sunsetTime,
             cloudiness: result.clouds.all,
             timezone: timezoneUTCshift,
-            isLoadedWeather: true
+            isLoadedWeather: true,
+
+            // You were calling this.setState() twice, once here and once in getTime().
+            // That's probably fine since both happen sequentially, there will only be one render()
+            // after executing these functions, but I would try to make it habit to be very
+            // careful with my calls to setState(), so let's just combine them, it is more
+            // clear and less code anyway.
+            // Change the name of getTime() and have it return the result instead of 
+            // calling setState().
+            currentTimeSection: calculateTimeSection(sunriseMili, sunsetMili)
         });
 
-        this.getTime(sunriseMili, sunsetMili);
+        // You should rename this method.  "getTime()" sounds like an accessor function,
+        // like "getDate()", but really you are doing some complicated calculations in there.
+        // You are really getting the "timeSection", so call it
+        // calculateTimeSection();
+        // this.getTime(sunriseMili, sunsetMili);
     }
 
+    // This is such a short piece of code, could probably just get ride of this function call
+    // and put this directly into the fetch call above.
     processLocationData = (result) => {
         //process the data and then set state
 
@@ -199,7 +256,25 @@ class Weather extends React.Component {
         console.log(this.state.sunriseMili, this.state.sunsetMili);
 
 
+        // I find it very strange that you use 'var' now and then.  I think of that as very
+        // "old fashioned" javascript.  I use;
+        // const foo ... if I'm not going to change the value (which inculdes 
+        //               Object and Array variables)
+        // let foo ... only if I have a variable (meaning I change the value)
         var timeSection = '';
+
+        // The format of this big change "if" is a little hard to follow, because 
+        // of how you formated the comments.  Sometimes it is useful to write out 
+        // your logic and use cases before you code it (which this kind of looks like),
+        // but then those comments aren't as useful later on (they became obvious/redudant).
+        // Are they still adding anything?  Maybe just remove them?  Or at least 
+        // reorganize and format like a regular if/else chain.
+        //
+        // if (...) {
+        //     
+        // } else if (...) {
+        //     // put a comment here
+        // }
 
         // check if it's sunrise time section
             // if hour is same as sunrise hour
@@ -244,7 +319,7 @@ class Weather extends React.Component {
 
         console.log("Time Section", timeSection);
 
-
+        // You can remove this if you make my changes in the calling function.
         this.setState({
             currentTimeSection: timeSection,
         });
@@ -266,6 +341,11 @@ class Weather extends React.Component {
 
         } else{
             // GENERAL RETURN
+
+            // I would do this, rather than scatter "this.state" everywhere.  It's just a habit, seems cleaner,
+            // and then I don't find some random "this.state.someOldVariableIForgotAbout" hidden in my JSX
+            // at some later point in time.
+            const { description, feelsLike, minTemp, maxTemp, sunrise, sunset, city, currentDate } = this.state;
 
             return(
                 <div className='get-weather-div'>

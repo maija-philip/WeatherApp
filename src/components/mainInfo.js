@@ -14,6 +14,8 @@ class MainInfo extends React.Component {
 
     }
 
+    // See my feedback from sideInfo.js, it's all the same for this Component.
+
 
     render() {
         
