@@ -7,8 +7,8 @@
 
 import React from 'react';
 // import ReactDOM from 'react-dom/client';
-import MainInfo from './MainInfo.js';
-import SideInfo from './SideInfo.js';
+import MainInfo from './mainInfo.js';
+import SideInfo from './sideInfo.js';
 import '../theme.css';
 import '../App.css';
 

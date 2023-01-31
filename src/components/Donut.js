@@ -1,64 +1,72 @@
-/*
- Author: Maija Philip
- Date: 12-12-2022
+import React from 'react';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Doughnut } from 'react-chartjs-2';
 
- Chart based off of https://codesandbox.io/s/jakariaemon-react-chart-victory-chkqkn?file=/src/App.js:630-654
- */
+// I normally hate coding videos, but this one was quite helpful:
+// https://www.youtube.com/watch?v=IqlmFSII8AY
 
+ChartJS.register(ArcElement, Tooltip, Legend);
 
- import React from 'react';
- import { useState } from 'react'; 
- import { VictoryPie } from "victory-pie";
- import { VictoryChart } from "victory-chart";
- import { VictoryTooltip } from "victory-tooltip";
-import { VictoryLabel } from 'victory';
- // import ReactDOM from 'react-dom/client';
- // import Weather from './get-weather.js';
+const options = {
+    plugins: {
+        // hide the legend
+        legend: {
+            display: false,
+        },
+    },
+};
 
- /*
- Needs the Props:
-    percentage: needs to be a value under 100
-    color: string of hex value
+const textCenter = {
+    id: 'textCenter',
+    beforeDatasetsDraw(chart, args, pluginOptions) {
+        const { ctx, data } = chart;
 
- */
- function Donut(props) {
+        ctx.save();
+        ctx.font = 'bolder 40px Bebas Neue';
+        ctx.fillStyle = 'red';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(
+            `${data.datasets[0].data[0]}`,
+            chart.getDatasetMeta(0).data[0].x - 15,
+            chart.getDatasetMeta(0).data[0].y
+        );
+    },
+};
+const textCenterPercentage = {
+    id: 'textCenter',
+    beforeDatasetsDraw(chart, args, pluginOptions) {
+        const { ctx } = chart;
 
-    const [data3, setData3] = useState([
-        { x: " ", y: props.percentage },
-        { x: " ", y: props.total - props.percentage }
-      ]);
-    
-    const [label, setLabel] = useState(false);
+        ctx.save();
+        ctx.font = 'bolder 40px Roboto';
+        ctx.fillStyle = 'blue';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(
+            `%`,
+            chart.getDatasetMeta(0).data[0].x + 15,
+            chart.getDatasetMeta(0).data[0].y
+        );
+    },
+};
 
-    // get theme colors
-    let root = document.querySelector(':root');
-    root = getComputedStyle(root);
-    const theme = root.getPropertyValue('--theme-dark');
-    const white = root.getPropertyValue('--white');
-    
+export default function ChartJSDonut({ percentage }) {
+    const data = {
+        labels: ['Doesnt', 'Matter'],
+        datasets: [
+            {
+                label: '# of Votes',
+                data: [percentage, 100 - percentage],
+                backgroundColor: ['#7AC0FA', '#e7e6eb'],
+                borderWidth: 0,
+            },
+        ],
+    };
+
     return (
-        <VictoryPie
-            padAngle={({ datum }) => 2}
-            animate={{
-                duration: 2000
-            }}
-            innerRadius={(val) => {
-                //console.log(val.datum);
-                return val.datum.x === "firefox" ? 170 : 130;
-            }}
-            width="800"
-            tooltip={"dshv"}
-            labelComponent={
-                label ? <VictoryTooltip dy={0} centerOffset={{ x: 25 }} /> : undefined
-            }
-            colorScale={[theme, white]}
-            data={data3}
-        />
-
+        <div style={{ display: 'flex', justifyContent: 'center', height: 200 }}>
+            <Doughnut data={data} options={options} plugins={[textCenter, textCenterPercentage]} />
+        </div>
     );
 }
-
-
- export default Donut;
-
- 
