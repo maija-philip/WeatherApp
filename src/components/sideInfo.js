@@ -26,6 +26,7 @@ function SideInfo(props) {
                     <br />
                     Wind Speed {windSpeed} meters/sec
                 </p>
+
                 <p>
                     wind direction: {windDirection}
                     {deg}

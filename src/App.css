@@ -3,20 +3,8 @@
   --white: #F7F7F7;
   --black: #020E26;
 
-  --night: #5355AC;
-  --night-dark: #5355AC;
-
-  --sunrise: #F87676;
-  --sunrise-dark: #A44539;
-
-  --clear: #7AC0FA;
-  --clear-dark: #376BBA;
-
-  --overcast: #BDCCD9;
-  --overcast-dark: #557185;
-
-  --sunset: #FBAA5F;
-  --sunset-dark: #8A500C;
+  --theme: #5355AC;
+  --theme-dark: #5355AC;
 
   /* form error colors */
   --error-red: #b8001f;
@@ -47,6 +35,32 @@ html, body {
 	box-sizing: border-box;
 }
 
+/* Load */
+.loaderBox {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loader {
+  width: 100px;
+  height: 100px;
+  background-color: var(--black);
+  margin: auto;
+  text-align: center;
+
+  animation: loading 6s linear infinite;
+}
+
+@keyframes loading {
+  0% {transform: rotate(0deg);}
+  25% {transform: rotate(90deg)}
+  50% {transform: rotate(180deg)}
+  75% {transform: rotate(270deg)}
+  100% {transform: rotate(360deg)}
+}
+
 /* Layout */
 
 .get-weather-div {
@@ -58,7 +72,7 @@ html, body {
 }
 
 .main-info-section {
-  background-color: var(--clear);
+  background-color: var(--theme);
   width: 65vw;
   height: 100vh;
   padding: 20px;
@@ -96,7 +110,7 @@ html, body {
 
 h1 {
   font-family: 'Bebas Neue', sans-serif;
-  color: var(--theme);
+  color: var(--black);
   font-size: 15em;
   line-height: 1em;
   padding: 0;
@@ -108,7 +122,7 @@ h1 {
 h2 {
   font-family: 'Bebas Neue', sans-serif;
   font-size: 2em;
-  color: var(--theme);
+  color: var(--black);
   line-height: 1.5em;
   padding: 0;
   margin: 0;
@@ -126,7 +140,7 @@ h2 {
 
 /* Side Info Styling */
 .side-info-section p {
-  color: var(--clear-dark);
+  color: var(--theme-dark);
 }
 
 .footer-logo {
