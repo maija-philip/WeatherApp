@@ -25,10 +25,16 @@ import { VictoryLabel } from 'victory';
 
     const [data3, setData3] = useState([
         { x: " ", y: props.percentage },
-        { x: " ", y: 100 - props.percentage }
+        { x: " ", y: props.total - props.percentage }
       ]);
     
     const [label, setLabel] = useState(false);
+
+    // get theme colors
+    let root = document.querySelector(':root');
+    root = getComputedStyle(root);
+    const theme = root.getPropertyValue('--theme-dark');
+    const white = root.getPropertyValue('--white');
     
     return (
         <VictoryPie
@@ -45,7 +51,7 @@ import { VictoryLabel } from 'victory';
             labelComponent={
                 label ? <VictoryTooltip dy={0} centerOffset={{ x: 25 }} /> : undefined
             }
-            colorScale={[props.color, "#e7e6eb"]}
+            colorScale={[theme, white]}
             data={data3}
         />
 

@@ -43,9 +43,12 @@ class Weather extends React.Component {
     }
 
     componentDidMount() {
+
         // get the location
-        // will also call the api to get weather data
-        this.getGeoLocation();
+            // will also call the api to get weather data
+            this.getGeoLocation();
+
+        
     }
 
     getGeoLocation = () => {
@@ -175,6 +178,7 @@ class Weather extends React.Component {
         const sunsetHour = sunsetDate.getHours();
         const sunsetMin = sunsetDate.getMinutes();
 
+            
 
         let timeSection = '';
 
@@ -187,6 +191,7 @@ class Weather extends React.Component {
                 // if hour is one less and minutes are greater than min
                 // if hour is one more and minutes are less than sunrise min
                 timeSection = 'SUNRISE';
+
         }
         else if (hour === sunsetHour || 
             (hour === sunsetHour - 1 && minutes > sunsetMin) ||
@@ -209,6 +214,30 @@ class Weather extends React.Component {
             timeSection = 'OVERCAST'
         }
 
+        // get the css root element for styling based on time section
+        const root = document.querySelector(':root');
+        const colors = {
+                NIGHT: ['#5355AC', '#7376E9'],
+                SUNRISE: ['#F87676', '#A44539'],
+                SUNSET: ['#FBAA5F', '#8A500C'],
+                CLEAR: ['#7AC0FA', '#376BBA'],
+                OVERCAST: ['#BDCCD9', '#557185'],
+                BLACK: ['#020E26'],
+                WHITE: ['#F7F7F7']
+            };
+
+        root.style.setProperty('--theme', colors[timeSection][0]);
+        root.style.setProperty('--theme-dark', colors[timeSection][1]);
+
+        if (timeSection == 'NIGHT') {
+            root.style.setProperty('--black', colors['WHITE'][0]);
+            root.style.setProperty('--white', colors['BLACK'][0]);
+        }
+        else {
+            root.style.setProperty('--black', colors['BLACK'][0]);
+            root.style.setProperty('--white', colors['WHITE'][0]);
+        }
+
 
         return timeSection;
 
@@ -223,7 +252,11 @@ class Weather extends React.Component {
 
         } else if (!isLoadedWeather || !isLoadedLocation) {
             // HERE IS WHERE YOU PUT A LOADY SPINNY
-            return <div>Loading...</div>
+            return (
+                <div className='loaderBox'>
+                    <div className='loader'></div>
+                </div>
+                );
 
         } else{
             // GENERAL RETURN

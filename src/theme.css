@@ -42,20 +42,8 @@ REMINDERS:
   --white: #F7F7F7;
   --black: #020E26;
 
-  --night: #5355AC;
-  --night-dark: #5355AC;
-
-  --sunrise: #F87676;
-  --sunrise-dark: #A44539;
-
-  --clear: #7AC0FA;
-  --clear-dark: #376BBA;
-
-  --overcast: #BDCCD9;
-  --overcast-dark: #557185;
-
-  --sunset: #FBAA5F;
-  --sunset-dark: #8A500C;
+  --theme: #5355AC;
+  --theme-dark: #5355AC;
 
   /* form error colors */
   --error-red: #b8001f;
@@ -187,7 +175,7 @@ fieldset input, fieldset label {
 
 fieldset input:hover, fieldset label:hover {background-color: var(--theme);}
 
-fieldset input:checked, fieldset input:checked ~ label {background-color: (--theme);}
+fieldset input:checked, fieldset input:checked ~ label {background-color: var(--theme);}
 
 
 /*
@@ -238,7 +226,7 @@ button, .button {
   text-transform: lowercase;
   text-decoration: none;
 }
-button:hover, .button:hover {background-color: var(--theme-light);}
+button:hover, .button:hover {background-color: var(--theme-dark);}
 
 /* footer */
 footer {
@@ -246,7 +234,7 @@ footer {
   width: 100vw;
   padding: 20px;
   text-align: center;
-  background-color: var(--theme-light);
+  background-color: var(--theme-dark);
 }
 
 footer a:hover {color: var(--theme);}

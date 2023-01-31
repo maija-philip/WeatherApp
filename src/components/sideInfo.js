@@ -23,8 +23,8 @@ function SideInfo(props) {
             <div>
                 <p>humidity: {humidity}{percent}</p>
                 <Donut
-                    percentage={80}
-                    color="#7AC0FA" 
+                    percentage={humidity}
+                    total={100}
                     />
                 <p> 
                     Visibility {visibility} meters<br/>
@@ -32,8 +32,8 @@ function SideInfo(props) {
                 </p>
                 <p>wind direction: {windDirection}{deg}</p>
                 <Donut
-                    percentage={23}
-                    color="#7AC0FA" 
+                    percentage={windDirection}
+                    total={360}
                     />
                 <p>
                     Sunrise {sunrise} <br/>
@@ -43,8 +43,8 @@ function SideInfo(props) {
                     cloudiness: {cloudiness}{percent}
                 </p>
                 <Donut
-                    percentage={10}
-                    color="#7AC0FA" 
+                    percentage={cloudiness}
+                    total={100}
                     />
 
                 <div className='footer-logo'></div>
